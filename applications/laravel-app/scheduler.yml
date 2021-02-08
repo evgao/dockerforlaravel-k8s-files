@@ -7,10 +7,14 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            type: scheduler
         spec:
           containers:
             - name: php-scheduler
               image: laravel-app-php
+              imagePullPolicy: IfNotPresent
               command: ["php", "artisan", "schedule:run"]
               envFrom:
                 - secretRef:

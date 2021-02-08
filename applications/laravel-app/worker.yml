@@ -22,6 +22,7 @@ spec:
       containers:
       - image: laravel-app-php
         name: php
+        imagePullPolicy: IfNotPresent
         command: ["php", "artisan", "horizon"]
         envFrom:
           - secretRef:

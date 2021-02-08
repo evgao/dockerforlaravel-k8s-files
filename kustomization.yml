@@ -6,24 +6,29 @@ namespace: docker4laravel
 resources:
 - applications/namespace.yml
 - applications/main-ingress.yml
-- applications/redis-01/pvc.yml
-- applications/redis-01/svc.yml
-- applications/redis-01/statefulset.yml
-- applications/laravel-app/migrator.yml
+#- applications/laravel-app/migrator.yml
 - applications/laravel-app/web.yml
 - applications/laravel-app/svc.yml
 - applications/laravel-app/worker.yml
 - applications/laravel-app/scheduler.yml
+# MySQL
+- applications/mysql/deployment.yml
+- applications/mysql/svc.yml
+# Redis
+- applications/redis-01/deployment.yml
+- applications/redis-01/svc.yml
+
 
 images:
 - name: laravel-app-nginx
-  newName: tonysm/docker4laravelapp-nginx
-  newTag: 732de17
+  #newName: tonysm/docker4laravelapp-nginx
+  newName: laravel-app-nginx
+  newTag: latest
 - name: laravel-app-php
-  newName: tonysm/docker4laravelapp-php
-  newTag: 732de17
+  #newName: tonysm/docker4laravelapp-php
+  newName: laravel-app-php
+  newTag: latest
 
 secretGenerator:
-- envs:
-  - .env
-  name: laravelapp-secret
+- name: laravelapp-secret
+  env: .env

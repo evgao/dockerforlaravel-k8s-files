@@ -19,13 +19,23 @@ spec:
       labels:
         app: web
     spec:
+      initContainers:
+      - name: migrations
+        image: laravel-app-php
+        imagePullPolicy: IfNotPresent
+        command: ["php",  "artisan", "migrate", "--force"]
+        envFrom:
+        - secretRef:
+            name: laravelapp-secret
       containers:
       - image: laravel-app-nginx
         name: nginx
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 80
       - image: laravel-app-php
         name: php
+        imagePullPolicy: IfNotPresent
         envFrom:
-          - secretRef:
-              name: laravelapp-secret
+        - secretRef:
+            name: laravelapp-secret
